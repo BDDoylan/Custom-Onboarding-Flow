@@ -9,7 +9,7 @@ const Credentials = () => {
   };
 
   return (
-    <div className='bg-accent-500 shadow-md rounded w-[500px] p-4'>
+    <div className='bg-accent-500 shadow-md rounded w-[400px] p-4'>
       <h2 className="text-primary-500 text-2xl font-bold mb-4 text-center">Credentials</h2>
 
       <input
@@ -20,7 +20,7 @@ const Credentials = () => {
         onChange={handleChange}
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4"
       />
-      
+
       <input
         type="password"
         name="password"

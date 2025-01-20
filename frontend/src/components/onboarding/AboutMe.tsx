@@ -9,7 +9,7 @@ const AboutMe = () => {
   };
 
   return (
-    <div className='bg-accent-500 shadow-md rounded w-[500px] p-4'>
+    <div className='bg-accent-500 shadow-md rounded w-[400px] p-4'>
       <h2 className="text-primary-500 text-2xl font-bold mb-4 text-center">About Me</h2>
 
       <textarea

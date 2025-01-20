@@ -125,7 +125,7 @@ const AdminPage = () => {
         <div className='text-center mt-20 text-primary-500 text-2xl'>Loading Config...</div>
       ) : (
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className='flex flex-row'>
+          <div className='flex 2xl:flex-row 2xl:w-full w-8/12 mx-auto flex-col'>
             {stepKeys.map((key, index) => (
               <Droppable key={key} droppableId={key} isDropDisabled={false} isCombineEnabled={false} ignoreContainerClipping={false}>
                 {(provided) => (
@@ -163,7 +163,7 @@ const AdminPage = () => {
       {!loading && (
         <button
           onClick={saveOrder}
-          className='bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded mx-auto flex w-72 mt-10 justify-center'
+          className='bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded mx-auto flex w-72 mt-10 justify-center mb-14'
         >
           Save
         </button>
