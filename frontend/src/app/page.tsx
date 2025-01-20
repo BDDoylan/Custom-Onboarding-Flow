@@ -181,20 +181,15 @@ export default function Home() {
 
       if (!foundUser) {
         const nextStep = currentStep + 1;
-
         updateUserData({ stepNumber: nextStep });
-
         const userDataWithNextStep = { ...userData, stepNumber: nextStep };
 
         await saveUserData(userDataWithNextStep, updateUserData);
-
         setCurrentStep((prevStep) => prevStep + 1);
       }
     } else {
       const nextStep = currentStep + 1;
-
       updateUserData({ stepNumber: nextStep });
-
       const userDataWithNextStep = { ...userData, stepNumber: nextStep };
 
       await saveUserData(userDataWithNextStep, updateUserData);
@@ -248,7 +243,7 @@ export default function Home() {
         <button
           onClick={handleNextStep}
           className="bg-accent-500 hover:bg-accent-600 text-primary-500 font-bold py-2 px-4 w-36 rounded focus:outline-none focus:shadow-outline ml-4"
-          disabled={!onboardingConfig} // Disable if config hasn't loaded yet
+          disabled={!onboardingConfig}
         >
           {currentStep === 3 ? 'Submit' : 'Next'}
         </button>

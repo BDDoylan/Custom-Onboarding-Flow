@@ -20,20 +20,23 @@ async function getOnBoardingConfig() {
 const AdminPage = () => {
   const [configId, setConfigId] = useState(null);
   const [components, setComponents] = useState<{ [key: string]: string[] }>({ stepOne: [], stepTwo: [], stepThree: [] });
+  const [loading, setLoading] = useState(true);
 
   const stepKeys = ['stepOne', 'stepTwo', 'stepThree'];
 
   useEffect(() => {
     async function fetchConfig() {
-      const config = await getOnBoardingConfig();
-
-      setConfigId(config[0]?.id);
-
-      setComponents({
-        stepOne: config[0]?.stepOne || [],
-        stepTwo: config[0]?.stepTwo || [],
-        stepThree: config[0]?.stepThree || [],
-      });
+      try {
+        const config = await getOnBoardingConfig();
+        setConfigId(config[0]?.id);
+        setComponents({
+          stepOne: config[0]?.stepOne || [],
+          stepTwo: config[0]?.stepTwo || [],
+          stepThree: config[0]?.stepThree || [],
+        });
+      } finally {
+        setLoading(false);
+      }
     }
 
     fetchConfig();
@@ -118,47 +121,53 @@ const AdminPage = () => {
       <h1 className='text-3xl font-bold text-primary-500 text-center mt-8'>Admin Page</h1>
       <p className='text-1xl font-bold text-primary-500 text-center mb-4'>Drag and drop components to reorder them!</p>
 
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className='flex flex-row'>
-          {stepKeys.map((key, index) => (
-            <Droppable key={key} droppableId={key} isDropDisabled={false} isCombineEnabled={false} ignoreContainerClipping={false}>
-              {(provided) => (
-                <div
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                  className='w-full bg-primary-200 shadow-lg rounded p-4 m-4'
-                >
-                  <h3 className='text-primary-500 text-2xl font-bold mb-4 text-center'>
-                    {`Step ${index + 1}`}
-                  </h3>
+      {loading ? (
+        <div className='text-center mt-20 text-primary-500 text-2xl'>Loading Config...</div>
+      ) : (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className='flex flex-row'>
+            {stepKeys.map((key, index) => (
+              <Droppable key={key} droppableId={key} isDropDisabled={false} isCombineEnabled={false} ignoreContainerClipping={false}>
+                {(provided) => (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    className='w-full bg-primary-200 shadow-lg rounded p-4 m-4'
+                  >
+                    <h3 className='text-primary-500 text-2xl font-bold mb-4 text-center'>
+                      {`Step ${index + 1}`}
+                    </h3>
 
-                  {components[key].map((component, index) => (
-                    <Draggable key={component} draggableId={component} index={index}>
-                      {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          <DynamicStep componentNames={[component]} />
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          ))}
-        </div>
-      </DragDropContext>
+                    {components[key].map((component, index) => (
+                      <Draggable key={component} draggableId={component} index={index}>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            <DynamicStep componentNames={[component]} />
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            ))}
+          </div>
+        </DragDropContext>
+      )}
 
-      <button
-        onClick={saveOrder}
-        className='bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded mx-auto flex w-72 mt-10 justify-center'
-      >
-        Save
-      </button>
+      {!loading && (
+        <button
+          onClick={saveOrder}
+          className='bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded mx-auto flex w-72 mt-10 justify-center'
+        >
+          Save
+        </button>
+      )}
     </div>
   );
 };
