@@ -127,7 +127,7 @@ const AdminPage = () => {
         <DragDropContext onDragEnd={onDragEnd}>
           <div className='flex 2xl:flex-row 2xl:w-full w-8/12 mx-auto flex-col'>
             {stepKeys.map((key, index) => (
-              <Droppable key={key} droppableId={key} isDropDisabled={false} isCombineEnabled={false} ignoreContainerClipping={false}>
+              <Droppable key={key} droppableId={key} isDropDisabled={false} isCombineEnabled={false} ignoreContainerClipping={false} direction='vertical'>
                 {(provided) => (
                   <div
                     {...provided.droppableProps}
