@@ -1,4 +1,4 @@
-# Zealthy-Custom-Onboarding-Flow
+# Custom-Onboarding-Flow
 
 ## Features
 
